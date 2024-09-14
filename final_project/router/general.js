@@ -76,15 +76,29 @@ public_users.get('/author/:author', async function (req, res) {
 });
 
 // Get all books based on title
-public_users.get('/title/:title',function (req, res) {
+//public_users.get('/title/:title',function (req, res) {
+//    const title = req.params.title;
+//    let book = [];
+ //   Object.keys(books).forEach(i => {
+ //     if(books[i].title === title) {
+  //        book.push(books[i])
+ //     }
+ // });
+  //    res.send(book);
+//});
+
+// Task 13: Get book details based on title by async/await
+public_users.get('/title/:title', async function (req, res) {
     const title = req.params.title;
     let book = [];
-    Object.keys(books).forEach(i => {
-      if(books[i].title === title) {
-          book.push(books[i])
-      }
-  });
-      res.send(book);
+    let bookList = await getBooksPromise(books);
+
+    Object.keys(bookList).forEach(i => {
+        if(bookList[i].title == title){
+            book.push(bookList[i])
+        }
+    });
+    res.send(book);
 });
 
 //  Get book review
