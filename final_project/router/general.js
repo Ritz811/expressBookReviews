@@ -21,18 +21,28 @@ public_users.post("/register", (req,res) => {
     return res.status(404).json({message: 
         "A error ocurred when trying to register user, please try again."});
 });
-
-// Get the book list available in the shop
-//public_users.get('/',function (req, res) {
-  //  res.send(JSON.stringify(books,null,10));
-//});
-
+// Function with a Promise to be called for async GET requests
+function getBooksPromise(booksRouter) { 
+    return new Promise((resolve, reject) => {
+        if (booksRouter) {
+            resolve(booksRouter);
+        } else {
+        reject("No books were found, please try again with different parameters.");
+        }
+    });
+}
 // Task 10: Get the list of books available in the shop
 // by async/await
 public_users.get('/', async function (req, res) {
     let bookList = await getBooksPromise(books);
     res.send(bookList);
 });
+// Get the book list available in the shop
+//public_users.get('/',function (req, res) {
+  //  res.send(JSON.stringify(books,null,10));
+//});
+
+
 
 // Get book details based on ISBN
 //public_users.get('/isbn/:isbn',function (req, res) {
