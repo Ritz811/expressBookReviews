@@ -47,11 +47,19 @@ regd_users.post("/login", (req,res) => {
         return res.status(208).json({ message: "Invalid Login, please check username and password and try again." });
     }
 });
-
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+    const isbn = req.params.isbn;
+    const username = req.session.authorization.username;
+    const review = req.body.review;
+
+    if (books[isbn]){
+        books[isbn].reviews[username] = review;
+        res.send(`The review of the book with ISBN ${isbn} from user 
+               ${username} has been published.`);
+    } else {
+        res.send(`No books with ISBN ${isbn} were found in the database.`);
+    }
 });
 
 module.exports.authenticated = regd_users;
