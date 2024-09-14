@@ -51,14 +51,27 @@ public_users.get('/isbn/:isbn', function (req, res) {
  });
   
 // Get book details based on author
-public_users.get('/author/:author',function (req, res) {
-  const author = req.params.author;
-  let book = [];
-  Object.keys(books).forEach(i => {
-    if(books[i].author === author) {
-        book.push(books[i])
-    }
-});
+//public_users.get('/author/:author',function (req, res) {
+  //const author = req.params.author;
+  //let book = [];
+  //Object.keys(books).forEach(i => {
+    //if(books[i].author === author) {
+     //   book.push(books[i])
+    //}
+//});
+  //  res.send(book);
+//});
+//Task 12: Get book details based on author by async/await
+public_users.get('/author/:author', async function (req, res) {
+    const author = req.params.author;
+    let book = [];
+    let bookList = await getBooksPromise(books);
+
+    Object.keys(bookList).forEach(i => {
+        if(bookList[i].author == author){
+            book.push(books[i])
+        }
+    });
     res.send(book);
 });
 
