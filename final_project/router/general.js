@@ -35,9 +35,19 @@ public_users.get('/', async function (req, res) {
 });
 
 // Get book details based on ISBN
-public_users.get('/isbn/:isbn',function (req, res) {
+//public_users.get('/isbn/:isbn',function (req, res) {
+  //  const isbn = req.params.isbn;
+    //res.send(books[isbn]);
+ //});
+
+ //Task 11: Get book details based on ISBN by Promise
+public_users.get('/isbn/:isbn', function (req, res) {
     const isbn = req.params.isbn;
-    res.send(books[isbn]);
+    getBooksPromise(books[isbn])
+    .then(
+        result => res.send(result),
+        error => res.send(error)
+    )
  });
   
 // Get book details based on author
